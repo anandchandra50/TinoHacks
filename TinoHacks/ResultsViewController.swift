@@ -254,6 +254,9 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
         }
         
         
+        //restaurant address
+        
+        
         
         //restaurant number
         restaurantPhoneNumber.setTitle(restaurantData["phone"] as! String, for: UIControlState.normal)
@@ -261,6 +264,9 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
         //restaurant location for map
         toSendLatitude = restaurantData["latitude"]! as? Double
         toSendLongitude = restaurantData["longitude"]! as? Double
+        
+        //restaurant key for menu
+        restaurantAPI = restaurantData["apiKey"]! as? String
         
     }
     
@@ -307,9 +313,7 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
             if let identifier = segue.identifier {
                 if identifier == "Show Map" {
                     print("seguing correctly")
-                    
-                    
-                    
+
                     mapVC.latitude = toSendLatitude
                     mapVC.longitude = toSendLongitude
                     
