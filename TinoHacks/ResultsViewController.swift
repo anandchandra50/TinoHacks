@@ -30,6 +30,7 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
         restaurantNameLabel.text = ""
         restaurantPhoneNumber.setTitle("", for: UIControlState.normal)
         restaurantHours.text = ""
+        restaurantAddress.setTitle("", for: UIControlState.normal)
         
         searchForRestaurant()
         // Do any additional setup after loading the view.
@@ -217,6 +218,7 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var restaurantPhoneNumber: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var restaurantHours: UILabel!
+    @IBOutlet weak var restaurantAddress: UIButton!
     
     private func updateUI(restaurantData: [String: Any?]) {
         print(restaurantData["name"])
@@ -255,8 +257,7 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
         
         
         //restaurant address
-        
-        
+        restaurantAddress.setTitle(restaurantData["streetAddress"] as! String, for: UIControlState.normal)
         
         //restaurant number
         restaurantPhoneNumber.setTitle(restaurantData["phone"] as! String, for: UIControlState.normal)
@@ -316,6 +317,8 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
 
                     mapVC.latitude = toSendLatitude
                     mapVC.longitude = toSendLongitude
+                    
+                    mapVC.navigationItem.title = restaurantAddress.currentTitle!
                     
                 }
             }

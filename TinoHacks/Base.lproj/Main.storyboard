@@ -45,7 +45,7 @@
             </objects>
             <point key="canvasLocation" x="836" y="115.59220389805098"/>
         </scene>
-        <!--Search View Controller-->
+        <!--Search-->
         <scene sceneID="dst-qN-ktg">
             <objects>
                 <viewController id="ddi-c3-TDo" customClass="SearchViewController" customModule="TinoHacks" customModuleProvider="target" sceneMemberID="viewController">
@@ -145,7 +145,7 @@
                             <constraint firstItem="OSc-S9-iRo" firstAttribute="top" secondItem="CtC-uy-O76" secondAttribute="bottom" id="lkf-Ad-65Z"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="fEF-pr-jyK"/>
+                    <navigationItem key="navigationItem" title="Search" id="fEF-pr-jyK"/>
                     <connections>
                         <outlet property="getLocationButton" destination="XS6-aD-vcA" id="bZ3-0d-9nL"/>
                         <outlet property="numberOfMiles" destination="5wN-aC-R0Q" id="xaB-KH-BZ3"/>
@@ -224,6 +224,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="restaurantAddress" destination="o94-zN-e6D" id="J2m-AW-XqC"/>
                         <outlet property="restaurantHours" destination="Vp6-tN-oFt" id="HMU-ab-Y5n"/>
                         <outlet property="restaurantNameLabel" destination="hnr-8c-3PP" id="vPn-Ch-8wY"/>
                         <outlet property="restaurantPhoneNumber" destination="vhQ-fT-52a" id="QWG-hs-vTS"/>

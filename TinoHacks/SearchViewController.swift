@@ -149,6 +149,7 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                         resultVC.zipCode = zipCode
                     }
                     
+                    resultVC.navigationItem.title = "Restaurant"
                     
                     print(searchRadius)
                     print(latitude)
