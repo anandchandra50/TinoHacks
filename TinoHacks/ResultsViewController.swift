@@ -27,12 +27,8 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        restaurantNameLabel.text = ""
-        restaurantPhoneNumber.setTitle("", for: UIControlState.normal)
-        restaurantHours.text = ""
-        restaurantAddress.setTitle("", for: UIControlState.normal)
+        runProgram()
         
-        searchForRestaurant()
         // Do any additional setup after loading the view.
     }
     
@@ -48,7 +44,17 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    
+    private func runProgram() {
+        restaurantNameLabel.text = ""
+        restaurantPhoneNumber.setTitle("", for: UIControlState.normal)
+        restaurantHours.text = ""
+        restaurantAddress.setTitle("", for: UIControlState.normal)
+        restaurantImage.image = nil
+        restaurantUrl.setTitle("", for: .normal)
+        tapOnMapLabel.text = ""
+        
+        searchForRestaurant()
+    }
     
     /*
      private var restaurantView = RestaurantDataView()
@@ -68,7 +74,7 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
     private func searchForRestaurant() {
         
         spinner?.startAnimating()
-
+        
         print("called method")
         if (longitude == nil) {
             print(zipCode)
@@ -137,7 +143,7 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
             }
             
             task.resume()
-
+            
         }
             
         else {
@@ -169,7 +175,7 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
                             print("successful as array")
                             
                             let index = self.randomInRange(end: restaurantResults.count)
-
+                            
                             print(restaurantResults[index])
                             
                             DispatchQueue.main.async {
@@ -191,8 +197,20 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    @IBOutlet weak var tapOnMapLabel: UILabel!
+
+    @IBAction func redoSearch(_ sender: RoundedButton) {
+        runProgram()
+    }
     
+    @IBOutlet weak var restaurantUrl: UIButton!
     @IBOutlet weak var restaurantNameLabel: UILabel!
+    
+    @IBAction func openRestaurantWebsite(_ sender: UIButton) {
+        print(sender.currentTitle)
+        UIApplication.shared.open(URL(string: sender.currentTitle!)!, options: [:], completionHandler: nil)
+
+    }
     
     @IBAction func callRestaurant(_ sender: UIButton) {
         print("trying to call phone")
@@ -202,7 +220,7 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
         phoneNumber = phoneNumber.replacingOccurrences(of: ")", with: "", options: NSString.CompareOptions.literal, range: nil)
         phoneNumber = phoneNumber.replacingOccurrences(of: " ", with: "", options: NSString.CompareOptions.literal, range: nil)
         phoneNumber = phoneNumber.replacingOccurrences(of: "-", with: "", options: NSString.CompareOptions.literal, range: nil)
-
+        
         print(phoneNumber)
         
         if let phoneCallURL = URL(string: "tel://\(phoneNumber)") {
@@ -212,17 +230,21 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
                 application.open(phoneCallURL, options: [:], completionHandler: nil)
             }
         }
-
+        
     }
     
+
+    @IBOutlet weak var restaurantImage: UIImageView!
     @IBOutlet weak var restaurantPhoneNumber: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var restaurantHours: UILabel!
     @IBOutlet weak var restaurantAddress: UIButton!
     
     private func updateUI(restaurantData: [String: Any?]) {
-        print(restaurantData["name"])
         spinner?.stopAnimating()
+        
+        //advise label
+        tapOnMapLabel.text = "Tap on address to see map!"
         
         //restaurant name
         restaurantNameLabel.text = restaurantData["name"] as! String
@@ -252,12 +274,47 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
             }
             else {
                 restaurantHours.text = "closed"
-            } 
+            }
+        }
+        
+        //restaurantUrl
+        let urlOfRestaurant = restaurantData["url"] as! String
+        restaurantUrl.setTitle(urlOfRestaurant, for: .normal)
+        
+        //restaurant image
+        let textURL = restaurantData["logoUrl"] as! String
+        print(textURL)
+        let imageURL = URL(string: textURL)
+        if imageURL != nil {
+            let serialQueue = DispatchQueue(label: "com.queue.Serial")
+            serialQueue.async {
+                
+                do {
+                    let contents = try Data(contentsOf: imageURL!)
+                    DispatchQueue.main.async {
+                        self.restaurantImage.image = UIImage(data: contents)
+                        
+                    }
+                }
+                catch {
+                    print("unable to print")
+                }
+                
+            }
         }
         
         
         //restaurant address
-        restaurantAddress.setTitle(restaurantData["streetAddress"] as! String, for: UIControlState.normal)
+        let street = restaurantData["streetAddress"] as! String; let city = restaurantData["city"] as! String; let state = restaurantData["state"] as! String
+        let address = street + "\n" + city + ", " + state
+        
+        print(address)
+        
+        restaurantAddress.titleLabel!.lineBreakMode = .byWordWrapping
+        restaurantAddress.titleLabel!.textAlignment = .center
+        restaurantAddress.setTitle(address, for: .normal)
+        //restaurantAddress.setAttributedTitle(str, for: UIControlState.normal)
+        //restaurantAddress.setTitle(address, for: UIControlState.normal)
         
         //restaurant number
         restaurantPhoneNumber.setTitle(restaurantData["phone"] as! String, for: UIControlState.normal)
@@ -299,12 +356,12 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
     }
     
     
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
         
         var destinationvc = segue.destination
         if let navigationvc = destinationvc as? UINavigationController {
@@ -314,7 +371,7 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
             if let identifier = segue.identifier {
                 if identifier == "Show Map" {
                     print("seguing correctly")
-
+                    
                     mapVC.latitude = toSendLatitude
                     mapVC.longitude = toSendLongitude
                     
@@ -323,9 +380,9 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
                 }
             }
         }
-
         
-     }
+        
+    }
     
     
 }
