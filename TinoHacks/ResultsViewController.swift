@@ -14,7 +14,7 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
     var latitude: Double?
     var radius: Double?
     var zipCode: String?
-    
+    var openOnly: Bool?
     
     private var restaurantAPI: String?
     
@@ -78,7 +78,13 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
         print("called method")
         if (longitude == nil) {
             print(zipCode)
-            let url = URL(string: "https://www.zipcodeapi.com/rest/58t0U3koaVm4GR0cjatzVHNoHxAASNkXWNYQRje2eB7Us77MhBmdiaC0HcAz0UxW/info.json/" + zipCode! + "/degrees")
+            
+            print("important: printing from zip search")
+            
+            //second one is g7gey9b0r138Um78rQZCFRF4HbEpAaSQh95QjgQKiUSchZlJQllvc1AUcejNocDG
+            //first one is 58t0U3koaVm4GR0cjatzVHNoHxAASNkXWNYQRje2eB7Us77MhBmdiaC0HcAz0UxW
+            
+            let url = URL(string: "https://www.zipcodeapi.com/rest/g7gey9b0r138Um78rQZCFRF4HbEpAaSQh95QjgQKiUSchZlJQllvc1AUcejNocDG/info.json/" + zipCode! + "/degrees")
             var searchResults: [String: Any?]?
             
             let task = URLSession.shared.dataTask(with: url!) { (data: Data?, response: URLResponse?, error: Error?) in
@@ -118,23 +124,66 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
                         
                         if let restaurantResults = searchResults!["restaurants"] as? NSArray {
                             
-                            if (restaurantResults.count > 0) {
-                                print("successful as array")
-                                
-                                let index = self.randomInRange(end: restaurantResults.count)
-                                
-                                DispatchQueue.main.async {
-                                    self.updateUI(restaurantData: restaurantResults[index] as! [String : Any?])
+                            if self.openOnly! {
+                                if (restaurantResults.count > 0) {
+                                    print("successful as array")
+                                    var dataToSend: [String: Any?]?
+                                    
+                                    var toLoop = [Int]()
+                                    for num in 0..<restaurantResults.count {
+                                        toLoop.append(num)
+                                    }
+                                    
+                                    for index in toLoop.shuffled() {
+                                        let testData = restaurantResults[index] as! [String: Any?]
+                                        let date = Date()
+                                        let formatter = DateFormatter()
+                                        formatter.dateFormat = "yyyy-MM-dd"
+                                        let result = formatter.string(from: date)
+                                        let day = self.getDayOfWeek(result)!
+                                        print(self.daysOfWeek[day-1])
+                                        let textDay = self.daysOfWeek[day-1]
+                                        let allHours = testData["hours"]!
+                                        if let dayHours = allHours as? [String: Any?] {
+                                            print("have day hours")
+                                            
+                                            if let todayHours = dayHours[textDay] {
+                                                print(todayHours)
+                                                if let printArray = todayHours as? NSArray, let printString = printArray[0] as? String{
+                                                    dataToSend = restaurantResults[index] as! [String: Any?]
+                                                    break
+                                                }
+                                            }
+                                            
+                                        }
+                                        
+                                    }
+                                    
+                                    DispatchQueue.main.async {
+                                        if (dataToSend != nil) {
+                                            self.updateUI(restaurantData: dataToSend!)
+                                        } else {
+                                            self.displayForNoResults()
+                                        }
+                                    }
+                                    
                                 }
-                                
-                                print(restaurantResults[index])
+                                else {
+                                    print("none found in range")
+                                }
+
+                            } else {
+                                if (restaurantResults.count > 0) {
+                                    let index = self.randomInRange(end: restaurantResults.count)
+                                    
+                                    DispatchQueue.main.async {
+                                        self.updateUI(restaurantData: restaurantResults[index] as! [String: Any?])
+                                    }
+                                }
                             }
-                            else {
-                                print("none found in range")
-                            }
-                        }
+                            
+                       }
                         
-                        print(error)
                     }
                     task2.resume()
                     
@@ -171,24 +220,66 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
                     
                     if let restaurantResults = searchResults!["restaurants"] as? NSArray {
                         
-                        if (restaurantResults.count > 0) {
-                            print("successful as array")
-                            
-                            let index = self.randomInRange(end: restaurantResults.count)
-                            
-                            print(restaurantResults[index])
-                            
-                            DispatchQueue.main.async {
-                                self.updateUI(restaurantData: restaurantResults[index] as! [String : Any?])
+                        if self.openOnly! {
+                            if (restaurantResults.count > 0) {
+                                print("successful as array")
+                                var dataToSend: [String: Any?]?
+                                
+                                var toLoop = [Int]()
+                                for num in 0..<restaurantResults.count {
+                                    toLoop.append(num)
+                                }
+                                
+                                for index in toLoop.shuffled() {
+                                    let testData = restaurantResults[index] as! [String: Any?]
+                                    let date = Date()
+                                    let formatter = DateFormatter()
+                                    formatter.dateFormat = "yyyy-MM-dd"
+                                    let result = formatter.string(from: date)
+                                    let day = self.getDayOfWeek(result)!
+                                    print(self.daysOfWeek[day-1])
+                                    let textDay = self.daysOfWeek[day-1]
+                                    let allHours = testData["hours"]!
+                                    if let dayHours = allHours as? [String: Any?] {
+                                        print("have day hours")
+                                        
+                                        if let todayHours = dayHours[textDay] {
+                                            print(todayHours)
+                                            if let printArray = todayHours as? NSArray, let printString = printArray[0] as? String{
+                                                dataToSend = restaurantResults[index] as! [String: Any?]
+                                                break
+                                            }
+                                        }
+                                        
+                                    }
+                                    
+                                }
+                                
+                                DispatchQueue.main.async {
+                                    if (dataToSend != nil) {
+                                        self.updateUI(restaurantData: dataToSend!)
+                                    } else {
+                                        self.displayForNoResults()
+                                    }
+                                }
+                                
+                            }
+                            else {
+                                print("none found in range")
                             }
                             
+                        } else {
+                            if (restaurantResults.count > 0) {
+                                let index = self.randomInRange(end: restaurantResults.count)
+                                
+                                DispatchQueue.main.async {
+                                    self.updateUI(restaurantData: restaurantResults[index] as! [String: Any?])
+                                }
+                            }
                         }
-                        else {
-                            print("none found in range")
-                        }
+                        
                     }
-                    
-                    print(error)
+
                 }
                 task.resume()
                 
@@ -239,6 +330,10 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var restaurantHours: UILabel!
     @IBOutlet weak var restaurantAddress: UIButton!
+    
+    private func displayForNoResults() {
+        restaurantNameLabel.text = "No Results Found"
+    }
     
     private func updateUI(restaurantData: [String: Any?]) {
         spinner?.stopAnimating()
@@ -385,4 +480,29 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
     }
     
     
+}
+
+
+extension MutableCollection where Indices.Iterator.Element == Index {
+    /// Shuffles the contents of this collection.
+    mutating func shuffle() {
+        let c = count
+        guard c > 1 else { return }
+        
+        for (firstUnshuffled , unshuffledCount) in zip(indices, stride(from: c, to: 1, by: -1)) {
+            let d: IndexDistance = numericCast(arc4random_uniform(numericCast(unshuffledCount)))
+            guard d != 0 else { continue }
+            let i = index(firstUnshuffled, offsetBy: d)
+            swap(&self[firstUnshuffled], &self[i])
+        }
+    }
+}
+
+extension Sequence {
+    /// Returns an array with the contents of this sequence, shuffled.
+    func shuffled() -> [Iterator.Element] {
+        var result = Array(self)
+        result.shuffle()
+        return result
+    }
 }
