@@ -33,8 +33,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[0]
         
-        let span = MKCoordinateSpanMake(0.03, 0.03)
-        let myLocation = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
+        let spanSize = sqrt(pow((location.coordinate.latitude - latitude!), 2) + pow((location.coordinate.longitude - longitude!), 2))
+        let span = MKCoordinateSpanMake(spanSize, spanSize)
+        let myLocation = CLLocationCoordinate2DMake((location.coordinate.latitude + latitude!) / 2, (location.coordinate.longitude + longitude!) / 2)
         
         let region = MKCoordinateRegionMake(myLocation, span)
         
