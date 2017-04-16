@@ -11,7 +11,7 @@ import CoreLocation
 import MapKit
 
 class MapViewController: UIViewController, CLLocationManagerDelegate{
-    
+
     var longitude: Double?
     var latitude: Double?
     
@@ -26,7 +26,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate{
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.requestWhenInUseAuthorization()
         manager.startUpdatingLocation()
-        
+
         // Do any additional setup after loading the view.
     }
     
@@ -49,8 +49,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate{
         
         manager.stopUpdatingLocation()
     }
-    
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
