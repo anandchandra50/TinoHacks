@@ -23,8 +23,7 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             print("SET ZIP CODE")
         }
     }
-    
-    
+        
     private var currentLocationIsPressed = false
     
     private var pickerData = [0.1, 0.5, 1, 5, 10, 25]
@@ -61,6 +60,7 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         searchRadius = Double(pickerData[row])
     }
     
+    @IBOutlet weak var restaurantControl: UISegmentedControl!
     
     
     @IBOutlet weak var getLocationButton: RoundedButton!
@@ -149,6 +149,8 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                         resultVC.zipCode = zipCode
                     }
                     
+                    resultVC.openOnly = restaurantControl.selectedSegmentIndex == 0
+                    print("check is \(restaurantControl.selectedSegmentIndex)")
                     resultVC.navigationItem.title = "Restaurant"
                     
                     print(searchRadius)
