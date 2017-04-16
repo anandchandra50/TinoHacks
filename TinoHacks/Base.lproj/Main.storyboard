@@ -67,7 +67,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="YRc-Nb-TeM">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="361"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Wpt-BY-bwB">
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="1h5-rr-aIi">
                                                 <rect key="frame" x="0.0" y="0.0" width="343" height="142.5"/>
                                                 <subviews>
                                                     <pickerView contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5wN-aC-R0Q">
@@ -145,7 +145,6 @@
                                         </subviews>
                                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="Wpt-BY-bwB" secondAttribute="trailing" id="gQG-mZ-Uyb"/>
                                             <constraint firstAttribute="trailing" secondItem="Eco-SU-dTq" secondAttribute="trailing" id="tD0-UJ-qBd"/>
                                         </constraints>
                                     </stackView>
@@ -284,7 +283,7 @@
                                                                 <rect key="frame" x="0.0" y="86" width="343" height="36"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                 <state key="normal" title="url">
-                                                                    <color key="titleColor" red="0.1960826655" green="0.42142712960000001" blue="0.77950721150000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <color key="titleColor" red="0.40000000600000002" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                 </state>
                                                                 <connections>
                                                                     <action selector="openRestaurantWebsite:" destination="ggB-du-S1P" eventType="touchUpInside" id="m7J-TX-8iV"/>
