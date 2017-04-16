@@ -16,9 +16,21 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
     var zipCode: String?
     
     
+    private var restaurantAPI: String?
+    
+    private var toSendLatitude: Double?
+    private var toSendLongitude: Double?
+    
+    private var begOfSearchString = "https://api.eatstreet.com/publicapi/v1/restaurant/search?"
+    private var endOfSearchStringBeforeRadius = "&method=pickup&pickup-"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         restaurantNameLabel.text = ""
+        restaurantPhoneNumber.setTitle("", for: UIControlState.normal)
+        restaurantHours.text = ""
+        
         searchForRestaurant()
         // Do any additional setup after loading the view.
     }
@@ -35,10 +47,7 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    private var restaurantAPI: String?
     
-    private var begOfSearchString = "https://api.eatstreet.com/publicapi/v1/restaurant/search?"
-    private var endOfSearchStringBeforeRadius = "&method=pickup&pickup-"
     
     /*
      private var restaurantView = RestaurantDataView()
@@ -180,16 +189,18 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
             
         }
     }
+    
+    
     @IBOutlet weak var restaurantNameLabel: UILabel!
     
     @IBAction func callRestaurant(_ sender: UIButton) {
         print("trying to call phone")
         
         var phoneNumber = sender.currentTitle!
-        phoneNumber.replacingOccurrences(of: "(", with: "", options: NSString.CompareOptions.literal, range: nil)
-        phoneNumber.replacingOccurrences(of: ")", with: "", options: NSString.CompareOptions.literal, range: nil)
-        phoneNumber.replacingOccurrences(of: " ", with: "", options: NSString.CompareOptions.literal, range: nil)
-        phoneNumber.replacingOccurrences(of: "-", with: "", options: NSString.CompareOptions.literal, range: nil)
+        phoneNumber = phoneNumber.replacingOccurrences(of: "(", with: "", options: NSString.CompareOptions.literal, range: nil)
+        phoneNumber = phoneNumber.replacingOccurrences(of: ")", with: "", options: NSString.CompareOptions.literal, range: nil)
+        phoneNumber = phoneNumber.replacingOccurrences(of: " ", with: "", options: NSString.CompareOptions.literal, range: nil)
+        phoneNumber = phoneNumber.replacingOccurrences(of: "-", with: "", options: NSString.CompareOptions.literal, range: nil)
 
         print(phoneNumber)
         
@@ -247,6 +258,10 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
         //restaurant number
         restaurantPhoneNumber.setTitle(restaurantData["phone"] as! String, for: UIControlState.normal)
         
+        //restaurant location for map
+        toSendLatitude = restaurantData["latitude"]! as? Double
+        toSendLongitude = restaurantData["longitude"]! as? Double
+        
     }
     
     private var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -293,8 +308,10 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
                 if identifier == "Show Map" {
                     print("seguing correctly")
                     
-                    mapVC.latitude = latitude
-                    mapVC.longitude = longitude
+                    
+                    
+                    mapVC.latitude = toSendLatitude
+                    mapVC.longitude = toSendLongitude
                     
                 }
             }
