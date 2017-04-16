@@ -33,10 +33,7 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        longitude = nil
-        latitude = nil
-        radius = nil
-        zipCode = nil
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -76,7 +73,7 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
         spinner?.startAnimating()
         
         print("called method")
-        if (longitude == nil) {
+        if (longitude == nil && zipCode != nil) {
             print(zipCode)
             
             print("important: printing from zip search")

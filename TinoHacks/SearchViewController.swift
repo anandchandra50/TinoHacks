@@ -121,6 +121,14 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     
+    override func shouldPerformSegue(withIdentifier identifier: String?, sender: Any?) -> Bool {
+        if latitude == nil && longitude == nil && zipCode == nil {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -138,8 +146,11 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             if let identifier = segue.identifier {
                 if identifier == "Show Results" {
                     print("seguing correctly")
-                    
-                    resultVC.radius = searchRadius
+                    if searchRadius == nil {
+                        resultVC.radius = 0.1
+                    } else {
+                        resultVC.radius = searchRadius
+                    }
 
                     if currentLocationIsPressed {
                         resultVC.latitude = latitude
