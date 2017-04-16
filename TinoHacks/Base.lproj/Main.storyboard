@@ -168,10 +168,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wbv-Mg-Tzs">
-                                <rect key="frame" x="0.0" y="64" width="132" height="117"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vp6-tN-oFt">
                                 <rect key="frame" x="202" y="151" width="46" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -198,12 +194,22 @@
                                 <rect key="frame" x="32" y="211" width="251" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="phone number"/>
+                                <connections>
+                                    <action selector="callRestaurant:" destination="ggB-du-S1P" eventType="touchUpInside" id="QPv-v6-Ibq"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o94-zN-e6D">
                                 <rect key="frame" x="32" y="393" width="251" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="phone number"/>
+                                <state key="normal" title="address"/>
+                                <connections>
+                                    <segue destination="wAf-b1-r7Y" kind="show" identifier="Show Map" id="LCr-uZ-A0H"/>
+                                </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wbv-Mg-Tzs">
+                                <rect key="frame" x="8" y="72" width="132" height="117"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.66666666669999997" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -212,13 +218,33 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="restaurantHours" destination="Vp6-tN-oFt" id="HMU-ab-Y5n"/>
                         <outlet property="restaurantNameLabel" destination="hnr-8c-3PP" id="vPn-Ch-8wY"/>
+                        <outlet property="restaurantPhoneNumber" destination="vhQ-fT-52a" id="QWG-hs-vTS"/>
                         <outlet property="spinner" destination="1a5-9c-eME" id="F0V-vo-3h4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EaQ-oB-0Ec" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3572" y="115.59220389805098"/>
+        </scene>
+        <!--Map View Controller-->
+        <scene sceneID="biE-5V-AwQ">
+            <objects>
+                <viewController id="wAf-b1-r7Y" customClass="MapViewController" customModule="TinoHacks" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KCq-Xz-uC0"/>
+                        <viewControllerLayoutGuide type="bottom" id="wr0-c6-kCI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LeL-Jl-Mlh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ucc-aV-Ba0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4506" y="116"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="uKV-5K-rzK">

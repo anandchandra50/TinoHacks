@@ -182,24 +182,83 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
     }
     @IBOutlet weak var restaurantNameLabel: UILabel!
     
+    @IBAction func callRestaurant(_ sender: UIButton) {
+        print("trying to call phone")
+        
+        var phoneNumber = sender.currentTitle!
+        phoneNumber.replacingOccurrences(of: "(", with: "", options: NSString.CompareOptions.literal, range: nil)
+        phoneNumber.replacingOccurrences(of: ")", with: "", options: NSString.CompareOptions.literal, range: nil)
+        phoneNumber.replacingOccurrences(of: " ", with: "", options: NSString.CompareOptions.literal, range: nil)
+        phoneNumber.replacingOccurrences(of: "-", with: "", options: NSString.CompareOptions.literal, range: nil)
+
+        print(phoneNumber)
+        
+        if let phoneCallURL = URL(string: "tel://\(phoneNumber)") {
+            print("successfully calling")
+            let application: UIApplication = UIApplication.shared
+            if (application.canOpenURL(phoneCallURL)) {
+                application.open(phoneCallURL, options: [:], completionHandler: nil)
+            }
+        }
+
+    }
+    
+    @IBOutlet weak var restaurantPhoneNumber: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
+    @IBOutlet weak var restaurantHours: UILabel!
     
     private func updateUI(restaurantData: [String: Any?]) {
         print(restaurantData["name"])
         spinner?.stopAnimating()
+        
         //restaurant name
         restaurantNameLabel.text = restaurantData["name"] as! String
         
         //restaurant hours
         let date = Date()
         let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY-MM-DD"
+        formatter.dateFormat = "yyyy-MM-dd"
         let result = formatter.string(from: date)
         print(result)
+        let day = getDayOfWeek(result)!
+        print(day)
+        print(daysOfWeek[day-1])
+        let textDay = daysOfWeek[day-1]
+        let allHours = restaurantData["hours"]!
+        if let dayHours = allHours as? [String: Any?] {
+            print("have day hours")
+            
+            if let todayHours = dayHours[textDay] {
+                print(todayHours)
+                if let printArray = todayHours as? NSArray, let printString = printArray[0] as? String{
+                    restaurantHours.text = textDay + ": " + printString
+                    print(restaurantHours.text)
+                } else {
+                    restaurantHours.text = "closed"
+                }
+            }
+            else {
+                restaurantHours.text = "closed"
+            } 
+        }
+        
+        
+        
+        //restaurant number
+        restaurantPhoneNumber.setTitle(restaurantData["phone"] as! String, for: UIControlState.normal)
         
     }
     
+    private var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     
+    private func getDayOfWeek(_ today:String) -> Int? {
+        let formatter  = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        guard let todayDate = formatter.date(from: today) else { return nil }
+        let myCalendar = Calendar(identifier: .gregorian)
+        let weekDay = myCalendar.component(.weekday, from: todayDate)
+        return weekDay
+    }
     
     private func randomInRange(end: Int) -> Int {
         let B = UInt32(end)
@@ -217,14 +276,32 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
         return nil
     }
     
-    /*
+    
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      // Get the new view controller using segue.destinationViewController.
      // Pass the selected object to the new view controller.
+        
+        var destinationvc = segue.destination
+        if let navigationvc = destinationvc as? UINavigationController {
+            destinationvc = navigationvc.visibleViewController ?? destinationvc
+        }
+        if let mapVC = destinationvc as? MapViewController {
+            if let identifier = segue.identifier {
+                if identifier == "Show Map" {
+                    print("seguing correctly")
+                    
+                    mapVC.latitude = latitude
+                    mapVC.longitude = longitude
+                    
+                }
+            }
+        }
+
+        
      }
-     */
+    
     
 }

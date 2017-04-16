@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		51533F391EA3100600455613 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51533F381EA3100500455613 /* MapViewController.swift */; };
 		51ED73CE1EA2A675004DEB0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ED73CD1EA2A675004DEB0E /* AppDelegate.swift */; };
 		51ED73D31EA2A675004DEB0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51ED73D11EA2A675004DEB0E /* Main.storyboard */; };
 		51ED73D61EA2A675004DEB0E /* TinoHacks.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 51ED73D41EA2A675004DEB0E /* TinoHacks.xcdatamodeld */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		51533F381EA3100500455613 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		51ED73CA1EA2A675004DEB0E /* TinoHacks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinoHacks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51ED73CD1EA2A675004DEB0E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		51ED73D21EA2A675004DEB0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			children = (
 				51ED73CD1EA2A675004DEB0E /* AppDelegate.swift */,
 				51ED73D11EA2A675004DEB0E /* Main.storyboard */,
+				51533F381EA3100500455613 /* MapViewController.swift */,
 				51ED74061EA2AAC4004DEB0E /* RoundedButton.swift */,
 				51ED73D71EA2A675004DEB0E /* Assets.xcassets */,
 				51ED73D91EA2A675004DEB0E /* LaunchScreen.storyboard */,
@@ -289,6 +292,7 @@
 				51ED74051EA2A924004DEB0E /* SearchViewController.swift in Sources */,
 				51ED73D61EA2A675004DEB0E /* TinoHacks.xcdatamodeld in Sources */,
 				51ED74091EA2B1F7004DEB0E /* ResultsViewController.swift in Sources */,
+				51533F391EA3100600455613 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
