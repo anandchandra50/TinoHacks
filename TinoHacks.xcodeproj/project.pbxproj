@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C9FA0071EA3506D00EB66C5 /* FoodFlareApp.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9FA0061EA3506D00EB66C5 /* FoodFlareApp.png */; };
 		51533F391EA3100600455613 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51533F381EA3100500455613 /* MapViewController.swift */; };
 		51ED73CE1EA2A675004DEB0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ED73CD1EA2A675004DEB0E /* AppDelegate.swift */; };
 		51ED73D31EA2A675004DEB0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51ED73D11EA2A675004DEB0E /* Main.storyboard */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C9FA0061EA3506D00EB66C5 /* FoodFlareApp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FoodFlareApp.png; path = ../../../../Desktop/FoodFlareApp.png; sourceTree = "<group>"; };
 		51533F381EA3100500455613 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		51ED73CA1EA2A675004DEB0E /* TinoHacks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinoHacks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51ED73CD1EA2A675004DEB0E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				51533F381EA3100500455613 /* MapViewController.swift */,
 				51ED74061EA2AAC4004DEB0E /* RoundedButton.swift */,
 				51ED73D71EA2A675004DEB0E /* Assets.xcassets */,
+				4C9FA0061EA3506D00EB66C5 /* FoodFlareApp.png */,
 				51ED73D91EA2A675004DEB0E /* LaunchScreen.storyboard */,
 				51ED73DC1EA2A675004DEB0E /* Info.plist */,
 				51ED73D41EA2A675004DEB0E /* TinoHacks.xcdatamodeld */,
@@ -261,6 +264,7 @@
 			files = (
 				51ED73DB1EA2A675004DEB0E /* LaunchScreen.storyboard in Resources */,
 				51ED73D81EA2A675004DEB0E /* Assets.xcassets in Resources */,
+				4C9FA0071EA3506D00EB66C5 /* FoodFlareApp.png in Resources */,
 				51ED73D31EA2A675004DEB0E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

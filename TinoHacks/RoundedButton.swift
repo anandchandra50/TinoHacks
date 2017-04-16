@@ -2,7 +2,7 @@
 //  RoundedButton.swift
 //  TinoHacks
 //
-//  Created by Rohit Chandra on 4/15/17.
+//  Created by Anand Chandra on 4/15/17.
 //  Copyright © 2017 AnandChandraMichaelWu. All rights reserved.
 //
 
