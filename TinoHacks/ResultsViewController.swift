@@ -16,6 +16,8 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
     var zipCode: String?
     var openOnly: Bool?
     
+    var errorLabel: UILabel?
+    
     private var restaurantAPI: String?
     
     private var toSendLatitude: Double?
@@ -51,6 +53,19 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
         tapOnMapLabel.text = ""
         
         searchForRestaurant()
+    }
+    
+    private func displayError(){
+        errorLabel = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+        errorLabel?.numberOfLines = 3
+        let screenSize = UIScreen.main.bounds
+        errorLabel!.center = CGPoint.init(x: (screenSize.width / 2), y: (screenSize.height / 2))
+        errorLabel!.textAlignment = .center
+        errorLabel!.text = "There were no restaurants within \n \(self.radius!) miles of you... sorry."
+        errorLabel!.textColor = UIColor.white
+        errorLabel!.font = UIFont.boldSystemFont(ofSize: 20.0)
+        self.view.addSubview(errorLabel!)
+        self.errorLabel?.isHidden = true
     }
     
     /*
@@ -167,6 +182,9 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
                                 }
                                 else {
                                     print("none found in range")
+                                    self.displayError()
+                                    self.errorLabel?.isHidden = false
+                                    self.spinner.stopAnimating()
                                 }
 
                             } else {
@@ -263,6 +281,9 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
                             }
                             else {
                                 print("none found in range")
+                                self.displayError()
+                                self.errorLabel?.isHidden = false
+                                self.spinner.stopAnimating()
                             }
                             
                         } else {
@@ -289,6 +310,7 @@ class ResultsViewController: UIViewController, UIScrollViewDelegate {
 
     @IBAction func redoSearch(_ sender: RoundedButton) {
         runProgram()
+        self.errorLabel?.isHidden = true
     }
     
     @IBOutlet weak var restaurantUrl: UIButton!
